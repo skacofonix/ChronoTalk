@@ -9,11 +9,12 @@ namespace ChronoTalk.Views
         public MeetingPage()
         {
             this.InitializeComponent();
+        }
 
-            this.BindingContext = new MeetingViewModel
-            {
-                Navigation = this.Navigation
-            };
+        protected override void OnBindingContextChanged()
+        {
+            var vm = this.BindingContext as BaseViewModel;
+            vm.Navigation = this.Navigation;
         }
 
         private async void ListView_OnItemTapped(object sender, ItemTappedEventArgs e)

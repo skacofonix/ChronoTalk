@@ -2431,32 +2431,32 @@ namespace ChronoTalk.Droid
 		public partial class Color
 		{
 			
-			// aapt resource value: 0x7f08004b
-			public const int abc_background_cache_hint_selector_material_dark = 2131230795;
-			
 			// aapt resource value: 0x7f08004c
-			public const int abc_background_cache_hint_selector_material_light = 2131230796;
+			public const int abc_background_cache_hint_selector_material_dark = 2131230796;
 			
 			// aapt resource value: 0x7f08004d
-			public const int abc_color_highlight_material = 2131230797;
+			public const int abc_background_cache_hint_selector_material_light = 2131230797;
+			
+			// aapt resource value: 0x7f08004e
+			public const int abc_color_highlight_material = 2131230798;
 			
 			// aapt resource value: 0x7f080004
 			public const int abc_input_method_navigation_guard = 2131230724;
 			
-			// aapt resource value: 0x7f08004e
-			public const int abc_primary_text_disable_only_material_dark = 2131230798;
-			
 			// aapt resource value: 0x7f08004f
-			public const int abc_primary_text_disable_only_material_light = 2131230799;
+			public const int abc_primary_text_disable_only_material_dark = 2131230799;
 			
 			// aapt resource value: 0x7f080050
-			public const int abc_primary_text_material_dark = 2131230800;
+			public const int abc_primary_text_disable_only_material_light = 2131230800;
 			
 			// aapt resource value: 0x7f080051
-			public const int abc_primary_text_material_light = 2131230801;
+			public const int abc_primary_text_material_dark = 2131230801;
 			
 			// aapt resource value: 0x7f080052
-			public const int abc_search_url_text = 2131230802;
+			public const int abc_primary_text_material_light = 2131230802;
+			
+			// aapt resource value: 0x7f080053
+			public const int abc_search_url_text = 2131230803;
 			
 			// aapt resource value: 0x7f080005
 			public const int abc_search_url_text_normal = 2131230725;
@@ -2467,11 +2467,11 @@ namespace ChronoTalk.Droid
 			// aapt resource value: 0x7f080007
 			public const int abc_search_url_text_selected = 2131230727;
 			
-			// aapt resource value: 0x7f080053
-			public const int abc_secondary_text_material_dark = 2131230803;
-			
 			// aapt resource value: 0x7f080054
-			public const int abc_secondary_text_material_light = 2131230804;
+			public const int abc_secondary_text_material_dark = 2131230804;
+			
+			// aapt resource value: 0x7f080055
+			public const int abc_secondary_text_material_light = 2131230805;
 			
 			// aapt resource value: 0x7f080049
 			public const int accent = 2131230793;
@@ -2671,17 +2671,20 @@ namespace ChronoTalk.Droid
 			// aapt resource value: 0x7f080039
 			public const int secondary_text_disabled_material_light = 2131230777;
 			
+			// aapt resource value: 0x7f08004b
+			public const int splash_background = 2131230795;
+			
 			// aapt resource value: 0x7f08003a
 			public const int switch_thumb_disabled_material_dark = 2131230778;
 			
 			// aapt resource value: 0x7f08003b
 			public const int switch_thumb_disabled_material_light = 2131230779;
 			
-			// aapt resource value: 0x7f080055
-			public const int switch_thumb_material_dark = 2131230805;
-			
 			// aapt resource value: 0x7f080056
-			public const int switch_thumb_material_light = 2131230806;
+			public const int switch_thumb_material_dark = 2131230806;
+			
+			// aapt resource value: 0x7f080057
+			public const int switch_thumb_material_light = 2131230807;
 			
 			// aapt resource value: 0x7f08003c
 			public const int switch_thumb_normal_material_dark = 2131230780;
@@ -3333,8 +3336,11 @@ namespace ChronoTalk.Droid
 			// aapt resource value: 0x7f020066
 			public const int mr_ic_settings_light = 2130837606;
 			
+			// aapt resource value: 0x7f020068
+			public const int notification_template_icon_bg = 2130837608;
+			
 			// aapt resource value: 0x7f020067
-			public const int notification_template_icon_bg = 2130837607;
+			public const int splashscreen = 2130837607;
 			
 			static Drawable()
 			{

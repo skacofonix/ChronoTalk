@@ -10,16 +10,17 @@ using Android.OS;
 namespace ChronoTalk.Droid
 {
     [Activity(Label = "MainActivity", ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
-    public class MainActivity : Xamarin.Forms.Platform.Android.FormsAppCompatActivity
+    //public class MainActivity : Xamarin.Forms.Platform.Android.FormsAppCompatActivity
+    public class MainActivity : Xamarin.Forms.Platform.Android.FormsApplicationActivity
     {
         protected override void OnCreate(Bundle bundle)
         {
-            ToolbarResource = Resource.Layout.toolbar;
-            TabLayoutResource = Resource.Layout.tabs;
+            //ToolbarResource = Resource.Layout.toolbar;
+            //TabLayoutResource = Resource.Layout.tabs;
+            Xamarin.Forms.Forms.Init(this, bundle);
 
             base.OnCreate(bundle);
 
-            Xamarin.Forms.Forms.Init(this, bundle);
             LoadApplication(new App());
         }
     }
