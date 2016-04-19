@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:ChronoTalk.Converters;assembly=ChronoTalk"
+             xmlns:viewModels="clr-namespace:ChronoTalk.ViewModels;assembly=ChronoTalk"
+             x:Class="ChronoTalk.Views.MeetingPage"
+             Title="Chrono talk">
+
+  <ContentPage.BindingContext>
+    <viewModels:MeetingViewModel />
+  </ContentPage.BindingContext>
+  
+  <ContentPage.Resources>
+      <ResourceDictionary>
+          <converters:ReverseBoolConverter x:Key="ReverseBoolConverter" />
+      </ResourceDictionary>
+  </ContentPage.Resources>
+
+  <ContentPage.ToolbarItems>
+    <ToolbarItem Text="Settings" Order="Secondary" Command="{Binding ShowSettingsCommand}" />
+    <ToolbarItem Text="Reset" Order="Secondary" Command="{Binding ResetStopwatchCommand}" />
+  </ContentPage.ToolbarItems>
+
+  <StackLayout Padding="10">
+      
+      <StackLayout Orientation="Horizontal">
+      
+        <Grid HorizontalOptions="CenterAndExpand" VerticalOptions="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="80" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="70" />
+                <ColumnDefinition Width="70" />
+                <ColumnDefinition Width="40" />
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Row="0" Grid.Column="0" FontSize="60" VerticalOptions="End" HorizontalTextAlignment="End" IsVisible="{Binding DisplayStopwatch}" Text="{Binding ElapsedTime.Minutes, StringFormat='{0:0}'}" />
+            <Label Grid.Row="0" Grid.Column="1" FontSize="60" VerticalOptions="End" HorizontalTextAlignment="End" IsVisible="{Binding DisplayStopwatch}" Text="{Binding ElapsedTime.Seconds, StringFormat='{0:00}'}" />
+            <Label Grid.Row="0" Grid.Column="2" FontSize="30" VerticalOptions="End" HorizontalTextAlignment="Start" IsVisible="{Binding DisplayStopwatch}" Text="{Binding ElapsedMilliseconds}" />
+        </Grid>
+        
+        <Button HorizontalOptions="End" Text="Start" Command="{Binding ToggleStopwatchCommand}" BackgroundColor="#4CAF50" IsVisible="{Binding IsRunning, Converter={StaticResource ReverseBoolConverter}}" />
+        <Button HorizontalOptions="End" Text="Stop" Command="{Binding ToggleStopwatchCommand}" BackgroundColor="#F44336" IsVisible="{Binding IsRunning}" />
+
+      </StackLayout>
+
+        <ListView ItemsSource="{Binding Speakers}" ItemTapped="ListView_OnItemTapped" RowHeight="45">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <ViewCell.View>
+                            <StackLayout Orientation="Horizontal" Padding="5">
+
+                                <Image Source="{Binding Image}" />
+                                <Label Text="{Binding Name}" HorizontalOptions="StartAndExpand" VerticalTextAlignment="Center" LineBreakMode="TailTruncation" />
+
+                                <Grid HorizontalOptions="End" VerticalOptions="Center">
+                                  <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                  </Grid.RowDefinitions>
+                                  <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="25" />
+                                    <ColumnDefinition Width="25" />
+                                    <ColumnDefinition Width="20" />
+                                  </Grid.ColumnDefinitions>
+
+                                  <Label Grid.Row="0" Grid.Column="0" VerticalOptions="Center" HorizontalOptions="End" FontSize="20" Text="{Binding SpeakTime.Minutes, StringFormat='{0:0}'}" />
+                                  <Label Grid.Row="0" Grid.Column="1" VerticalOptions="Center" HorizontalOptions="End" FontSize="20" Text="{Binding SpeakTime.Seconds, StringFormat='{0:00}'}" />
+                                  <Label Grid.Row="0" Grid.Column="2" VerticalOptions="End" HorizontalOptions="Start" FontSize="14" Text="{Binding SpeakTimeMilliseconds}" />
+                                
+                                </Grid>
+                              
+                                <Button Command="{Binding ToggleSpeakerCommand}" HorizontalOptions="End" VerticalOptions="FillAndExpand" Text="Toggle" />
+                              
+                            </StackLayout>
+                        </ViewCell.View>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <Button Text="Add speaker" Command="{Binding AddSpeakerCommand}" />
+
+    </StackLayout>
+
+</ContentPage>

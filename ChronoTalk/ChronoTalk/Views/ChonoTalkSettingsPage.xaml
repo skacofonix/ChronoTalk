@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:Sandbox.ViewModels;assembly=Sandbox"
+             x:Class="ChronoTalk.Views.ChonoTalkSettingsPage"
+             Title="Settings">
+
+  <ContentPage.BindingContext>
+    <viewModels:ChronoTalkSettingsViewModel />
+  </ContentPage.BindingContext>
+  
+  
+  <ContentPage.ToolbarItems>
+    <ToolbarItem Text="Reset" Order="Secondary" Command="{Binding ResetCommand}" />
+  </ContentPage.ToolbarItems>
+  
+
+  <StackLayout>
+
+    <TableView>
+      <TableSection>
+        <SwitchCell Text="Allow stopwath meeting without talk" On="{Binding AllowStopwatchMeetingWithoutTalk}" />
+        <SwitchCell Text="Restart last talk after restart meeting" On="{Binding ReStartLastTalkAfterReStartMeetingStopwatch}"/>
+        <ViewCell>
+          <StackLayout>
+            <Label Text="Refresh render stopwatch (ms)" />
+            <Label FontAttributes="Bold" Text="{Binding RefreshDelay}" />
+            <Stepper Value="{Binding RefreshDelay}" />
+          </StackLayout>
+        </ViewCell>
+      </TableSection>
+    </TableView>
+
+  </StackLayout>
+  
+</ContentPage>

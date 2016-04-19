@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:Sandbox.Converters;assembly=Sandbox"
+             xmlns:vm="clr-namespace:Sandbox.ViewModels;assembly=Sandbox"
+             x:Class="ChronoTalk.Views.SpeakerPage"
+             Title="Speaker">
+
+  <!--
+  <ContentPage.BindingContext>
+    <vm:SpeakerViewModel />
+  </ContentPage.BindingContext>
+  -->
+  
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <converters:ReverseBoolConverter x:Key="ReverseBoolConverter" />
+    </ResourceDictionary>
+  </ContentPage.Resources>
+
+  <ScrollView> 
+  
+    <StackLayout Padding="10">
+
+      <Image Source="{Binding Image}" />
+      <Entry Text="{Binding Name}" Placeholder="Name" />
+      <Label Text="{Binding SpeakTime, StringFormat='{0:c}'}" />
+
+      <Button HorizontalOptions="End" Text="Start" Command="{Binding ToggleSpeakerCommand}" BackgroundColor="#4CAF50" IsVisible="{Binding IsSpeaking, Converter={StaticResource ReverseBoolConverter}}" />
+      <Button HorizontalOptions="End" Text="Stop" Command="{Binding ToggleSpeakerCommand}" BackgroundColor="#F44336" IsVisible="{Binding IsSpeaking}" />
+
+      <ListView ItemsSource="{Binding Talks}" >
+        <ListView.ItemTemplate>
+          <DataTemplate>
+            <ViewCell>
+              <ViewCell.View>
+                <Label Text="{Binding Duration, StringFormat='{0:c}'}" />
+              </ViewCell.View>
+            </ViewCell>
+          </DataTemplate>
+        </ListView.ItemTemplate>
+      </ListView>
+    
+    </StackLayout>
+
+  </ScrollView>
+
+</ContentPage>
