@@ -138,6 +138,14 @@ namespace ChronoTalk.Models
             return TimeSpan.FromTicks(ticks);
         }
 
+        public double ComputeRatioSpeakTime(Speaker speaker)
+        {
+            var speakerSpeakTime = this.TotalSpeakTime(speaker).TotalMilliseconds;
+            var meetingSpeakTime = this.TotalSpeakTime().TotalMilliseconds;
+
+            return speakerSpeakTime / meetingSpeakTime;
+        }
+
         private void StartMeeting()
         {
             if(!this.StartTime.HasValue)

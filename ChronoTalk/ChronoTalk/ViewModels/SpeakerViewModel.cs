@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using ChronoTalk.Messages;
 using ChronoTalk.Models;
+using ChronoTalk.Tools;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using Xamarin.Forms;
@@ -14,7 +15,9 @@ namespace ChronoTalk.ViewModels
         private readonly Speaker speaker;
         private readonly Meeting meeting;
         private RelayCommand toggleSpeaker;
-        private ObservableCollection<TalkViewModel> talks = new ObservableCollection<TalkViewModel>(); 
+        private ObservableCollection<TalkViewModel> talks = new ObservableCollection<TalkViewModel>();
+        private double speakTimeRatio;
+        private Timer timer;
 
         private SpeakerViewModel()
         {
@@ -28,6 +31,14 @@ namespace ChronoTalk.ViewModels
 
             this.meeting.TalkChanged += MeetingOnTalkChanged;
             this.meeting.MeetingStatusChanged += MeetingOnMeetingStatusChanged;
+
+            timer = new Timer(state => RefreshSpeakTimeRatio(), null, 0, 1000);
+        }
+
+        private void RefreshSpeakTimeRatio()
+        {
+            if (this.SpeakTime.TotalMilliseconds > 0.0)
+                SpeakTimeRatio = this.meeting.ComputeRatioSpeakTime(this.speaker);
         }
 
         public string Name
@@ -66,6 +77,16 @@ namespace ChronoTalk.ViewModels
                 this.meeting?.CurrentTalk?.State == SpeakerStatus.Speaking;
 
         public TimeSpan SpeakTime => this.meeting.TotalSpeakTime(this.speaker);
+
+        public double SpeakTimeRatio
+        {
+            get { return speakTimeRatio; }
+            set
+            {
+                speakTimeRatio = value;
+                OnPropertyChanged();
+            }
+        }
 
         public string SpeakTimeMilliseconds => this.SpeakTime.Milliseconds.ToString("000").Substring(0, 2);
 

@@ -18,7 +18,7 @@ namespace ChronoTalk.Tools
                 {
                     if (IsCancellationRequested)
                         break;
-                    Task.Run(() => tuple.Item1(tuple.Item2));
+                    await Task.Run(() => tuple.Item1(tuple.Item2));
                     await Task.Delay(period);
                 }
 

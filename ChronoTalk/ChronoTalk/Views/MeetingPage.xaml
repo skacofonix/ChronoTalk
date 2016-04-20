@@ -55,8 +55,9 @@
 
                                 <Image Source="{Binding Image}" />
                                 <Label Text="{Binding Name}" HorizontalOptions="StartAndExpand" VerticalTextAlignment="Center" LineBreakMode="TailTruncation" />
+                                <Slider Value="{Binding SpeakTimeRatio}" MinimumWidthRequest="70" />
 
-                                <Grid HorizontalOptions="End" VerticalOptions="Center">
+                              <Grid HorizontalOptions="End" VerticalOptions="Center">
                                   <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
                                   </Grid.RowDefinitions>
@@ -75,6 +76,7 @@
                                 <Button Command="{Binding ToggleSpeakerCommand}" HorizontalOptions="End" VerticalOptions="FillAndExpand" Text="Toggle" />
                               
                             </StackLayout>
+                         
                         </ViewCell.View>
                     </ViewCell>
                 </DataTemplate>
