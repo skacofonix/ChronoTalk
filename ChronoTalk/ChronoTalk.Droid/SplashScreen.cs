@@ -5,7 +5,7 @@ using Android.OS;
 
 namespace ChronoTalk.Droid
 {
-    [Activity(Label = "ChronoTalk", MainLauncher = true, NoHistory = true, Theme = "@style/Theme.Splash", ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(Label = "ChronoTalk", MainLauncher = true, Icon= "@drawable/miniBlitzWhite", NoHistory = true, Theme = "@style/Theme.Splash", ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class SplashScreen : Activity
     {
         protected override void OnCreate(Bundle bundle)
