@@ -9,7 +9,7 @@ namespace ChronoTalk.Models
         public Speaker()
         {
             this.Name = "Speaker #" + ++SpeakerCounter;
-            this.Image = ImageSource.FromFile("Avatar.png");
+            this.Image = ImageSource.FromFile("avatar.png");
         }
 
         public string Id { get; private set; }
