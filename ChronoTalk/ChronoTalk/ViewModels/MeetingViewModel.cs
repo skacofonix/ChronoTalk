@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using ChronoTalk.Messages;
 using ChronoTalk.Models;
+using ChronoTalk.Tools;
 using ChronoTalk.Views;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
@@ -27,13 +28,17 @@ namespace ChronoTalk.ViewModels
         private bool displayStopwatch = true;
         private StopwatchState stopwatchState;
         private ICommand showSettingsCommand;
+        private Timer blinkStopWatchDisplayTimer;
+        private Timer refreshStopwatchRenderTimer;
+
 
         public MeetingViewModel()
         {
             Messenger.Default.Register<ToggleSpeakerChangeMessage>(this, OnReceiveToogleSpeakerChangeMessage);
+
             this.Initialize();
         }
-
+        
         private void Initialize(Meeting meeting = null)
         {
             this.StopwatchState = StopwatchState.Zero;
@@ -243,7 +248,10 @@ namespace ChronoTalk.ViewModels
             if (status == MeetingStatus.IsRunning)
             {
                 this.StopwatchState = StopwatchState.Running;
-                this.StartRefreshStopwatchRender();
+
+                refreshStopwatchRenderTimer = new Timer(state => RefreshStopwatchRender(), null, 0, RefreshDelayMillisecond);
+                blinkStopWatchDisplayTimer?.Dispose();
+
                 Messenger.Default.Send(new ToggleMainStopwatchMessage(true, this.CurrentSpeaker));
             }
             else if (status == MeetingStatus.PauseOrEnded)
@@ -257,7 +265,9 @@ namespace ChronoTalk.ViewModels
                     this.StopwatchState = StopwatchState.Pause;
                 }
 
-                this.StartBlinkStopwatchDisplay();
+                blinkStopWatchDisplayTimer = new Timer(state => BlinkStopwatchDisplay(), null, 0, BlinkDelayMillisecond);
+                refreshStopwatchRenderTimer?.Dispose();
+
                 Messenger.Default.Send(new ToggleMainStopwatchMessage(false, this.CurrentSpeaker));
             }
 
@@ -274,31 +284,20 @@ namespace ChronoTalk.ViewModels
             this.Meeting.Start();
         }
 
-        private async void StartRefreshStopwatchRender()
+        private void RefreshStopwatchRender()
         {
-            while (IsRunning)
-            {
-                this.OnPropertyChanged("ElapsedTime");
-                this.OnPropertyChanged("ElapsedDays");
-                this.OnPropertyChanged("ElapsedHours");
-                this.OnPropertyChanged("ElapsedMinutes");
-                this.OnPropertyChanged("ElapsedSeconds");
-                this.OnPropertyChanged("ElapsedMilliseconds");
-                Messenger.Default.Send(new RefreshStopwatchRenderMessage());
-                await Task.Delay(RefreshDelayMillisecond);
-            }
+            this.OnPropertyChanged("ElapsedTime");
+            this.OnPropertyChanged("ElapsedDays");
+            this.OnPropertyChanged("ElapsedHours");
+            this.OnPropertyChanged("ElapsedMinutes");
+            this.OnPropertyChanged("ElapsedSeconds");
+            this.OnPropertyChanged("ElapsedMilliseconds");
+            Messenger.Default.Send(new RefreshStopwatchRenderMessage());
         }
 
-        private async void StartBlinkStopwatchDisplay()
+        private void BlinkStopwatchDisplay()
         {
-            while (this.StopwatchState == StopwatchState.Pause)
-            {
-                DisplayStopwatch = !DisplayStopwatch;
-
-                await Task.Delay(BlinkDelayMillisecond);
-            }
-
-            DisplayStopwatch = true;
+            DisplayStopwatch = !DisplayStopwatch;
         }
 
         private void OnReceiveToogleSpeakerChangeMessage(ToggleSpeakerChangeMessage message)
