@@ -2,7 +2,6 @@
 
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:converters="clr-namespace:ChronoTalk.Converters;assembly=ChronoTalk"
              xmlns:viewModels="clr-namespace:ChronoTalk.ViewModels;assembly=ChronoTalk"
              x:Class="ChronoTalk.Views.MeetingPage"
              Title="Chrono talk">
@@ -11,12 +10,6 @@
     <viewModels:MeetingViewModel />
   </ContentPage.BindingContext>
   
-  <ContentPage.Resources>
-      <ResourceDictionary>
-          <converters:ReverseBoolConverter x:Key="ReverseBoolConverter" />
-      </ResourceDictionary>
-  </ContentPage.Resources>
-
   <ContentPage.ToolbarItems>
     <ToolbarItem Text="Settings" Order="Secondary" Command="{Binding ShowSettingsCommand}" />
     <ToolbarItem Text="Reset" Order="Secondary" Command="{Binding ResetStopwatchCommand}" />
@@ -40,30 +33,62 @@
             <Label Grid.Row="0" Grid.Column="1" FontSize="60" VerticalOptions="End" HorizontalTextAlignment="End" IsVisible="{Binding DisplayStopwatch}" Text="{Binding ElapsedTime.Seconds, StringFormat='{0:00}'}" />
             <Label Grid.Row="0" Grid.Column="2" FontSize="30" VerticalOptions="End" HorizontalTextAlignment="Start" IsVisible="{Binding DisplayStopwatch}" Text="{Binding ElapsedMilliseconds}" />
         </Grid>
-        
-        <Button HorizontalOptions="End" Text="Start" Command="{Binding ToggleStopwatchCommand}" BackgroundColor="#4CAF50" IsVisible="{Binding IsRunning, Converter={StaticResource ReverseBoolConverter}}" />
-        <Button HorizontalOptions="End" Text="Stop" Command="{Binding ToggleStopwatchCommand}" BackgroundColor="#F44336" IsVisible="{Binding IsRunning}" />
 
+        <Button Text="Start"
+                TextColor="Black"
+                BackgroundColor="#4CAF50"
+                Command="{Binding ToggleStopwatchCommand}"
+                HorizontalOptions="End">
+          <Button.Triggers>
+            <DataTrigger TargetType="Button"
+                         Binding="{Binding IsRunning}"
+                         Value="True">
+                <Setter Property="Text" Value="Stop" />
+                <Setter Property="BackgroundColor" Value="#F44336" />
+                <Setter Property="TextColor" Value="White" />
+            </DataTrigger>
+          </Button.Triggers>
+        </Button>
+        
       </StackLayout>
 
         <ListView ItemsSource="{Binding Speakers}" ItemTapped="ListView_OnItemTapped" RowHeight="45">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
+                      
                         <ViewCell.View>
                           
                             <Grid Padding="5">
+                              <Grid.Triggers>
+                                <DataTrigger TargetType="Grid"
+                                             Binding="{Binding IsSpeaking}"
+                                             Value="True">
+                                  <Setter Property="BackgroundColor" Value="#AED581" />
+                                </DataTrigger>
+                              </Grid.Triggers>
                               
                               <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
                               </Grid.ColumnDefinitions>
 
-                                <Image Grid.Column="0" Source="{Binding Image}" />
-                                <Label Grid.Column="1" Text="{Binding Name}" HorizontalOptions="StartAndExpand" VerticalTextAlignment="Center" LineBreakMode="TailTruncation" />
-                                <Slider Grid.Column="1" Value="{Binding SpeakTimeRatio}" MinimumWidthRequest="70" />
+                              <Button Grid.Column="0"
+                                      Image="{Binding Image}"
+                                      WidthRequest="50" 
+                                      Command="{Binding ShowSpeakerCommand}" 
+                                      CommandParameter="{Binding Speaker}" />
+                              
+                              <Label Grid.Column="1"
+                                     Text="{Binding Name}"
+                                     HorizontalOptions="StartAndExpand"
+                                     VerticalTextAlignment="Center"
+                                     LineBreakMode="TailTruncation" />
+                              <Slider Grid.Column="1"
+                                      Value="{Binding SpeakTimeRatio}"
+                                      MinimumWidthRequest="70"
+                                      IsVisible="False" />
 
                               <Grid Grid.Column="2" HorizontalOptions="End" VerticalOptions="Center">
                                   <Grid.RowDefinitions>
@@ -80,8 +105,6 @@
                                   <Label Grid.Row="0" Grid.Column="2" VerticalOptions="End" HorizontalOptions="Start" FontSize="14" Text="{Binding SpeakTimeMilliseconds}" />
                                 
                                 </Grid>
-                              
-                                <Button Grid.Column="3" Command="{Binding ToggleSpeakerCommand}" HorizontalOptions="End" VerticalOptions="FillAndExpand" Text="Toggle" />
 
                             </Grid>
 

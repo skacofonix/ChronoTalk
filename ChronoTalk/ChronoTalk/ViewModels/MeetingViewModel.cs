@@ -189,7 +189,7 @@ namespace ChronoTalk.ViewModels
 
         #region ShowSpeaker Command
 
-        public ICommand ShowSpeakerCommandCommand
+        public ICommand ShowSpeakerCommand
         {
             get
             {

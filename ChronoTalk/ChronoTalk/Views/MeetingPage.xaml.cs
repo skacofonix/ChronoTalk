@@ -6,6 +6,8 @@ namespace ChronoTalk.Views
 {
     public partial class MeetingPage
     {
+        private MeetingViewModel vm;
+
         public MeetingPage()
         {
             this.InitializeComponent();
@@ -13,7 +15,7 @@ namespace ChronoTalk.Views
 
         protected override void OnBindingContextChanged()
         {
-            var vm = this.BindingContext as BaseViewModel;
+            vm = this.BindingContext as MeetingViewModel;
             vm.Navigation = this.Navigation;
         }
 
@@ -21,13 +23,10 @@ namespace ChronoTalk.Views
         {
             var speaker = e.Item as SpeakerViewModel;
 
-            if (speaker != null)
-            {
-                await NavigateToSpeakerPage(speaker);
-            }
-
             var listview = (ListView)sender;
             listview.SelectedItem = null;
+
+            speaker.ToggleSpeakerCommand.Execute(speaker);
         }
 
         private async Task NavigateToSpeakerPage(SpeakerViewModel speaker)

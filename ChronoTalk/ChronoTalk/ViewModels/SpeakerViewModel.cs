@@ -18,6 +18,7 @@ namespace ChronoTalk.ViewModels
         private ObservableCollection<TalkViewModel> talks = new ObservableCollection<TalkViewModel>();
         private double speakTimeRatio;
         private Timer timer;
+        private ICommand showSpeakerCommand;
 
         private SpeakerViewModel()
         {
@@ -40,6 +41,8 @@ namespace ChronoTalk.ViewModels
             if (this.SpeakTime.TotalMilliseconds > 0.0)
                 SpeakTimeRatio = this.meeting.ComputeRatioSpeakTime(this.speaker);
         }
+
+        public Speaker Speaker => this.speaker;
 
         public string Name
         {
@@ -128,6 +131,23 @@ namespace ChronoTalk.ViewModels
                 this.OnPropertyChanged("SpeakTime");
                 this.OnPropertyChanged("SpeakTimeMilliseconds");
             }
+        }
+
+        public ICommand ShowSpeakerCommand
+        {
+            get
+            {
+                if (showSpeakerCommand == null)
+                {
+                    showSpeakerCommand = new RelayCommand<Speaker>(ExecuteShowSpeaer);
+                }
+                return showSpeakerCommand;
+            }
+        }
+
+        private void ExecuteShowSpeaer(Speaker speaker)
+        {
+            //MessagingCenter.Send(this, "Select", speaker);
         }
     }
 }
