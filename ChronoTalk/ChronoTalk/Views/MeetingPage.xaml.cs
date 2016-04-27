@@ -19,14 +19,10 @@ namespace ChronoTalk.Views
             vm.Navigation = this.Navigation;
         }
 
-        private async void ListView_OnItemTapped(object sender, ItemTappedEventArgs e)
+        private async void ListViewOnItemTapped(object sender, ItemTappedEventArgs e)
         {
-            var speaker = e.Item as SpeakerViewModel;
-
             var listview = (ListView)sender;
             listview.SelectedItem = null;
-
-            speaker.ToggleSpeakerCommand.Execute(speaker);
         }
 
         private async Task NavigateToSpeakerPage(SpeakerViewModel speaker)

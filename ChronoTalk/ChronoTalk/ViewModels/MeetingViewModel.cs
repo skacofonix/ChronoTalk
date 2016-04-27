@@ -30,6 +30,7 @@ namespace ChronoTalk.ViewModels
         private ICommand showSettingsCommand;
         private Timer blinkStopWatchDisplayTimer;
         private Timer refreshStopwatchRenderTimer;
+        private SpeakerViewModel selectedSpeaker;
 
         public MeetingViewModel()
         {
@@ -63,6 +64,19 @@ namespace ChronoTalk.ViewModels
         }
 
         public Meeting Meeting { get; private set; }
+
+        public SpeakerViewModel SelectedSpeaker
+        {
+            get { return selectedSpeaker; }
+            set
+            {
+                this.selectedSpeaker = value;
+
+                this.selectedSpeaker?.ToggleSpeakerCommand.Execute(this.selectedSpeaker);
+
+                OnPropertyChanged();
+            }
+        }
 
         public ObservableCollection<SpeakerViewModel> Speakers
         {
@@ -171,17 +185,20 @@ namespace ChronoTalk.ViewModels
             {
                 if (this.addSpeakerCommand == null)
                 {
-                    this.addSpeakerCommand = new RelayCommand(ExecuteAddSpeaker);
+                    this.addSpeakerCommand = new RelayCommand(async () => await ExecuteAddSpeaker());
                 }
 
                 return addSpeakerCommand;
             }
         }
 
-        private void ExecuteAddSpeaker()
+        private async Task ExecuteAddSpeaker()
         {
-            var newSpeaker = new Speaker();
-            this.Meeting.AddSpeaker(newSpeaker);
+            await Task.Run(() =>
+             {
+                 var newSpeaker = new Speaker();
+                 this.Meeting.AddSpeaker(newSpeaker);
+             });
         }
 
         #endregion
@@ -222,6 +239,8 @@ namespace ChronoTalk.ViewModels
                 return showSettingsCommand;
             }
         }
+
+        
 
         private async Task NavigateToSetting()
         {
