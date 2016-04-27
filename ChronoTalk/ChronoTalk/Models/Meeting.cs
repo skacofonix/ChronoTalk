@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace ChronoTalk.Models
@@ -11,6 +12,7 @@ namespace ChronoTalk.Models
         private List<Speaker> speakers = new List<Speaker>();
         private List<Talk> talks = new List<Talk>();
         private Talk currentTalk;
+        private Stopwatch stopwatch = new Stopwatch();
 
         public event EventHandler<Speaker> SpeakerAdded;
         public event EventHandler<MeetingStatus> MeetingStatusChanged;
@@ -39,7 +41,7 @@ namespace ChronoTalk.Models
         }
         public DateTime? StartTime { get; private set; }
         public DateTime? EndTime { get; private set; }
-        public TimeSpan Duration => this.ComputeDuration();
+        public TimeSpan Duration => this.stopwatch.Elapsed;
         public Talk CurrentTalk
         {
             get { return this.currentTalk; }
@@ -148,7 +150,9 @@ namespace ChronoTalk.Models
 
         private void StartMeeting()
         {
-            if(!this.StartTime.HasValue)
+            stopwatch.Start();
+
+            if (!this.StartTime.HasValue)
                 this.StartTime = DateTime.Now;
 
             this.EndTime = null;
@@ -157,6 +161,7 @@ namespace ChronoTalk.Models
 
         private void StopMeeting()
         {
+            this.stopwatch.Stop();
             this.CurrentTalk?.Stop();
             this.EndTime = DateTime.Now;
             this.State = MeetingStatus.PauseOrEnded;
@@ -170,15 +175,7 @@ namespace ChronoTalk.Models
             this.CurrentTalk = newTalk;
             this.Talks.Add(newTalk);
         }
-
-        private TimeSpan ComputeDuration()
-        {
-            if (!this.StartTime.HasValue)
-                return TimeSpan.Zero;
-
-            return this.EndTime.GetValueOrDefault(DateTime.Now).Subtract(this.StartTime.Value);
-        }
-
+        
         protected virtual void OnMeetingStatusChanged(MeetingStatus e)
         {
             MeetingStatusChanged?.Invoke(this, e);
