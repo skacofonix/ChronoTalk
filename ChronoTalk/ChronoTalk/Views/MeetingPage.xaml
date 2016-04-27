@@ -51,13 +51,21 @@
                 <DataTemplate>
                     <ViewCell>
                         <ViewCell.View>
-                            <StackLayout Orientation="Horizontal" Padding="5">
+                          
+                            <Grid Padding="5">
+                              
+                              <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                              </Grid.ColumnDefinitions>
 
-                                <Image Source="{Binding Image}" />
-                                <Label Text="{Binding Name}" HorizontalOptions="StartAndExpand" VerticalTextAlignment="Center" LineBreakMode="TailTruncation" />
-                                <Slider Value="{Binding SpeakTimeRatio}" MinimumWidthRequest="70" />
+                                <Image Grid.Column="0" Source="{Binding Image}" />
+                                <Label Grid.Column="1" Text="{Binding Name}" HorizontalOptions="StartAndExpand" VerticalTextAlignment="Center" LineBreakMode="TailTruncation" />
+                                <Slider Grid.Column="1" Value="{Binding SpeakTimeRatio}" MinimumWidthRequest="70" />
 
-                              <Grid HorizontalOptions="End" VerticalOptions="Center">
+                              <Grid Grid.Column="2" HorizontalOptions="End" VerticalOptions="Center">
                                   <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
                                   </Grid.RowDefinitions>
@@ -73,11 +81,11 @@
                                 
                                 </Grid>
                               
-                                <Button Command="{Binding ToggleSpeakerCommand}" HorizontalOptions="End" VerticalOptions="FillAndExpand" Text="Toggle" />
-                              
-                            </StackLayout>
-                         
-                        </ViewCell.View>
+                                <Button Grid.Column="3" Command="{Binding ToggleSpeakerCommand}" HorizontalOptions="End" VerticalOptions="FillAndExpand" Text="Toggle" />
+
+                            </Grid>
+
+                          </ViewCell.View>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
