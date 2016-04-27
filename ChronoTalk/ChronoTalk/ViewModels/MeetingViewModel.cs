@@ -58,6 +58,9 @@ namespace ChronoTalk.ViewModels
 
             this.Meeting.MeetingStatusChanged += MeetingOnMeetingStatusChanged;
             this.Meeting.SpeakerAdded += MeetingOnSpeakerAdded;
+
+            this.blinkStopWatchDisplayTimer?.Dispose();
+            this.displayStopwatch = true;
         }
 
         public Meeting Meeting { get; private set; }
@@ -251,6 +254,7 @@ namespace ChronoTalk.ViewModels
 
                 refreshStopwatchRenderTimer = new Timer(state => RefreshStopwatchRender(), null, 0, RefreshDelayMillisecond);
                 blinkStopWatchDisplayTimer?.Dispose();
+                DisplayStopwatch = true;
 
                 Messenger.Default.Send(new ToggleMainStopwatchMessage(true, this.CurrentSpeaker));
             }
