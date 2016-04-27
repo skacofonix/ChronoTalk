@@ -31,7 +31,6 @@ namespace ChronoTalk.ViewModels
         private Timer blinkStopWatchDisplayTimer;
         private Timer refreshStopwatchRenderTimer;
 
-
         public MeetingViewModel()
         {
             Messenger.Default.Register<ToggleSpeakerChangeMessage>(this, OnReceiveToogleSpeakerChangeMessage);
@@ -60,7 +59,7 @@ namespace ChronoTalk.ViewModels
             this.Meeting.SpeakerAdded += MeetingOnSpeakerAdded;
 
             this.blinkStopWatchDisplayTimer?.Dispose();
-            this.displayStopwatch = true;
+            this.DisplayStopwatch = true;
         }
 
         public Meeting Meeting { get; private set; }

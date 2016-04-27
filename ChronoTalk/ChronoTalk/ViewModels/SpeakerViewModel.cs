@@ -19,6 +19,7 @@ namespace ChronoTalk.ViewModels
         private double speakTimeRatio;
         private Timer timer;
         private ICommand showSpeakerCommand;
+        private readonly ICommand deleteSpeakerCommand;
 
         private SpeakerViewModel()
         {

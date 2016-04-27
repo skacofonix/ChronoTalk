@@ -57,8 +57,14 @@
                 <DataTemplate>
                     <ViewCell>
                       
+                      <ViewCell.ContextActions>
+                        <MenuItem Text="Edit"
+                                  Command="{Binding ShowSpeakerCommand}"
+                                  CommandParameter="{Binding Speaker}" />
+                        <MenuItem Text="Delete" />
+                      </ViewCell.ContextActions>
+                      
                         <ViewCell.View>
-                          
                             <Grid Padding="5">
                               <Grid.Triggers>
                                 <DataTrigger TargetType="Grid"
@@ -74,11 +80,11 @@
                                 <ColumnDefinition Width="Auto" />
                               </Grid.ColumnDefinitions>
 
-                              <Button Grid.Column="0"
-                                      Image="{Binding Image}"
-                                      WidthRequest="50" 
-                                      Command="{Binding ShowSpeakerCommand}" 
-                                      CommandParameter="{Binding Speaker}" />
+                              <Image Grid.Column="0"
+                                     Source="{Binding Image}"
+                                     Aspect="AspectFill"
+                                     HorizontalOptions="FillAndExpand"
+                                     VerticalOptions="FillAndExpand" />
                               
                               <Label Grid.Column="1"
                                      Text="{Binding Name}"
