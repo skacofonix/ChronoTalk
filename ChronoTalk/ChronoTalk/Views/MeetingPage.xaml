@@ -4,7 +4,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:ChronoTalk.ViewModels;assembly=ChronoTalk"
              x:Class="ChronoTalk.Views.MeetingPage"
-             Title="Chrono talk">
+             Title="Chrono talk" >
 
   <ContentPage.BindingContext>
     <viewModels:MeetingViewModel />
@@ -51,69 +51,81 @@
         
       </StackLayout>
 
-        <ListView ItemsSource="{Binding Speakers}" ItemTapped="ListViewOnItemTapped" RowHeight="45"
-                  SelectedItem="{Binding SelectedSpeaker, Mode=TwoWay}">
+        <ListView ItemsSource="{Binding Speakers}"
+                  SelectedItem="{Binding SelectedSpeaker, Mode=TwoWay}"
+                  ItemTapped="ListViewOnItemTapped"
+                  RowHeight="45">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
                       
                       <ViewCell.ContextActions>
                         <MenuItem Text="Edit"
-                                  Command="{Binding ShowSpeakerCommand}"
-                                  CommandParameter="{Binding Speaker}" />
-                        <MenuItem Text="Delete" />
+                                  Command="{Binding EditCommand}"
+                                  CommandParameter="{Binding .}" />
+                        <MenuItem Text="Delete" 
+                                  Command="{Binding DeleteCommand}"
+                                  CommandParameter="{Binding .}" />
                       </ViewCell.ContextActions>
                       
-                        <ViewCell.View>
-                            <Grid Padding="5">
-                              <Grid.Triggers>
-                                <DataTrigger TargetType="Grid"
-                                             Binding="{Binding IsSpeaking}"
-                                             Value="True">
-                                  <Setter Property="BackgroundColor" Value="#AED581" />
-                                </DataTrigger>
-                              </Grid.Triggers>
+                      <ViewCell.View>
+                          <Grid Padding="5">
+                            <Grid.Triggers>
+                              <DataTrigger TargetType="Grid"
+                                            Binding="{Binding IsSpeaking}"
+                                            Value="True">
+                                <Setter Property="BackgroundColor" Value="#AED581" />
+                              </DataTrigger>
+                            </Grid.Triggers>
                               
-                              <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                              </Grid.ColumnDefinitions>
+                            <Grid.ColumnDefinitions>
+                              <ColumnDefinition Width="Auto" />
+                              <ColumnDefinition Width="*" />
+                              <ColumnDefinition Width="*" />
+                              <ColumnDefinition Width="*" />
+                              <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
 
-                              <Image Grid.Column="0"
-                                     Source="{Binding Image}"
-                                     Aspect="AspectFill"
-                                     HorizontalOptions="FillAndExpand"
-                                     VerticalOptions="FillAndExpand" />
+                            <Image Grid.Column="0"
+                                    Source="{Binding Image}"
+                                    Aspect="AspectFill"
+                                    HorizontalOptions="FillAndExpand"
+                                    VerticalOptions="FillAndExpand" />
+                            
+                            <Button Grid.Column="1"
+                                    Text="Edit"
+                                    Command="{Binding EditCommand}"
+                                    CommandParameter="{Binding .}" />
                               
-                              <Label Grid.Column="1"
-                                     Text="{Binding Name}"
-                                     HorizontalOptions="StartAndExpand"
-                                     VerticalTextAlignment="Center"
-                                     LineBreakMode="TailTruncation" />
-                              <Slider Grid.Column="1"
-                                      Value="{Binding SpeakTimeRatio}"
-                                      MinimumWidthRequest="70"
-                                      IsVisible="False" />
+                            <Label Grid.Column="2"
+                                    Text="{Binding Name}"
+                                    HorizontalOptions="StartAndExpand"
+                                    VerticalTextAlignment="Center"
+                                    LineBreakMode="TailTruncation" />
+                            
+                            <Slider Grid.Column="3"
+                                    Value="{Binding SpeakTimeRatio}"
+                                    MinimumWidthRequest="70"
+                                    IsEnabled="false" />
 
-                              <Grid Grid.Column="2" HorizontalOptions="End" VerticalOptions="Center">
-                                  <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                  </Grid.RowDefinitions>
-                                  <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="25" />
-                                    <ColumnDefinition Width="25" />
-                                    <ColumnDefinition Width="20" />
-                                  </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="4" HorizontalOptions="End" VerticalOptions="Center">
+                                <Grid.RowDefinitions>
+                                  <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                  <ColumnDefinition Width="25" />
+                                  <ColumnDefinition Width="25" />
+                                  <ColumnDefinition Width="20" />
+                                </Grid.ColumnDefinitions>
 
-                                  <Label Grid.Row="0" Grid.Column="0" VerticalOptions="Center" HorizontalOptions="End" FontSize="20" Text="{Binding SpeakTime.Minutes, StringFormat='{0:0}'}" />
-                                  <Label Grid.Row="0" Grid.Column="1" VerticalOptions="Center" HorizontalOptions="End" FontSize="20" Text="{Binding SpeakTime.Seconds, StringFormat='{0:00}'}" />
-                                  <Label Grid.Row="0" Grid.Column="2" VerticalOptions="End" HorizontalOptions="Start" FontSize="14" Text="{Binding SpeakTimeMilliseconds}" />
+                                <Label Grid.Row="0" Grid.Column="0" VerticalOptions="Center" HorizontalOptions="End" FontSize="20" Text="{Binding SpeakTime.Minutes, StringFormat='{0:0}'}" />
+                                <Label Grid.Row="0" Grid.Column="1" VerticalOptions="Center" HorizontalOptions="End" FontSize="20" Text="{Binding SpeakTime.Seconds, StringFormat='{0:00}'}" />
+                                <Label Grid.Row="0" Grid.Column="2" VerticalOptions="End" HorizontalOptions="Start" FontSize="14" Text="{Binding SpeakTimeMilliseconds}" />
                                 
-                                </Grid>
-                            </Grid>
+                              </Grid>
+                          </Grid>
 
-                          </ViewCell.View>
+                        </ViewCell.View>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>

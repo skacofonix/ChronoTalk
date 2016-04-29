@@ -54,6 +54,7 @@
     <Compile Include="Tools\Timer.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\ChronoTalkSettingsViewModel.cs" />
+    <Compile Include="Messages\EditSpeakerMessage.cs" />
     <Compile Include="ViewModels\MeetingViewModel.cs" />
     <Compile Include="ViewModels\SpeakerViewModel.cs" />
     <Compile Include="ViewModels\TalkViewModel.cs" />

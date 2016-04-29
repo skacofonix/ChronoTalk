@@ -12,9 +12,10 @@ namespace ChronoTalk.Models
         private List<Speaker> speakers = new List<Speaker>();
         private List<Talk> talks = new List<Talk>();
         private Talk currentTalk;
-        private Stopwatch stopwatch = new Stopwatch();
+        private readonly Stopwatch stopwatch = new Stopwatch();
 
         public event EventHandler<Speaker> SpeakerAdded;
+        public event EventHandler<Speaker> SpeakerRemoved; 
         public event EventHandler<MeetingStatus> MeetingStatusChanged;
         public event EventHandler<Talk> TalkChanged;
 
@@ -57,6 +58,12 @@ namespace ChronoTalk.Models
         {
             this.Speakers.Add(speaker);
             this.OnSpeakerAdded(speaker);
+        }
+
+        public void DeleteSpeaker(Speaker speaker)
+        {
+            this.Speakers.Remove(speaker);
+            this.OnSpeakerRemoved(speaker);
         }
 
         public void ToggleSpeaker(Speaker speaker)
@@ -189,6 +196,11 @@ namespace ChronoTalk.Models
         protected virtual void OnSpeakerAdded(Speaker e)
         {
             SpeakerAdded?.Invoke(this, e);
+        }
+
+        protected virtual void OnSpeakerRemoved(Speaker e)
+        {
+            SpeakerRemoved?.Invoke(this, e);
         }
     }
 }

@@ -1,9 +1,11 @@
 using System;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using ChronoTalk.Messages;
 using ChronoTalk.Models;
 using ChronoTalk.Tools;
+using ChronoTalk.Views;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using Xamarin.Forms;
@@ -18,8 +20,8 @@ namespace ChronoTalk.ViewModels
         private ObservableCollection<TalkViewModel> talks = new ObservableCollection<TalkViewModel>();
         private double speakTimeRatio;
         private Timer timer;
-        private ICommand showSpeakerCommand;
-        private readonly ICommand deleteSpeakerCommand;
+        private ICommand editCommand;
+        private ICommand deleteCommand;
 
         private SpeakerViewModel()
         {
@@ -35,12 +37,6 @@ namespace ChronoTalk.ViewModels
             this.meeting.MeetingStatusChanged += MeetingOnMeetingStatusChanged;
 
             timer = new Timer(state => RefreshSpeakTimeRatio(), null, 0, 1000);
-        }
-
-        private void RefreshSpeakTimeRatio()
-        {
-            if (this.SpeakTime.TotalMilliseconds > 0.0)
-                SpeakTimeRatio = this.meeting.ComputeRatioSpeakTime(this.speaker);
         }
 
         public Speaker Speaker => this.speaker;
@@ -94,6 +90,12 @@ namespace ChronoTalk.ViewModels
 
         public string SpeakTimeMilliseconds => this.SpeakTime.Milliseconds.ToString("000").Substring(0, 2);
 
+        private void RefreshSpeakTimeRatio()
+        {
+            if (this.SpeakTime.TotalMilliseconds > 0.0)
+                SpeakTimeRatio = this.meeting.ComputeRatioSpeakTime(this.speaker);
+        }
+
         public ICommand ToggleSpeakerCommand
         {
             get
@@ -134,21 +136,40 @@ namespace ChronoTalk.ViewModels
             }
         }
 
-        public ICommand ShowSpeakerCommand
+        public ICommand EditCommand
         {
             get
             {
-                if (showSpeakerCommand == null)
+                if (editCommand == null)
                 {
-                    showSpeakerCommand = new RelayCommand<Speaker>(ExecuteShowSpeaer);
+                    editCommand = new RelayCommand<SpeakerViewModel>(async speakerViewModel => await ExecuteEditCommand(speakerViewModel));
                 }
-                return showSpeakerCommand;
+
+                return editCommand;
             }
         }
 
-        private void ExecuteShowSpeaer(Speaker speaker)
+        private async Task ExecuteEditCommand(SpeakerViewModel speakerViewModel)
         {
-            //MessagingCenter.Send(this, "Select", speaker);
+            Messenger.Default.Send(new EditSpeakerMessage(speakerViewModel));
+        }
+
+        public ICommand DeleteCommand
+        {
+            get
+            {
+                if (deleteCommand == null)
+                {
+                    deleteCommand = new Command<SpeakerViewModel>(async speakerViewModel => await ExecuteDeleteComand(speakerViewModel));
+                }
+
+                return deleteCommand;
+            }
+        }
+
+        private async Task ExecuteDeleteComand(SpeakerViewModel speakerViewModel)
+        {
+            this.meeting.DeleteSpeaker(this.speaker);
         }
     }
 }

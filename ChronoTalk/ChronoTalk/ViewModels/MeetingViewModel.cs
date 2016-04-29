@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ChronoTalk.Messages;
@@ -8,6 +9,7 @@ using ChronoTalk.Tools;
 using ChronoTalk.Views;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using Xamarin.Forms;
 
 namespace ChronoTalk.ViewModels
 {
@@ -23,7 +25,6 @@ namespace ChronoTalk.ViewModels
         private RelayCommand stopStopwatchCommmand;
         private RelayCommand resetStopwatchCommand;
         private RelayCommand<SpeakerViewModel> showSpeakerCommand;
-
         private SpeakerViewModel currentSpeaker;
         private bool displayStopwatch = true;
         private StopwatchState stopwatchState;
@@ -31,14 +32,16 @@ namespace ChronoTalk.ViewModels
         private Timer blinkStopWatchDisplayTimer;
         private Timer refreshStopwatchRenderTimer;
         private SpeakerViewModel selectedSpeaker;
+        private ICommand editCommand;
 
         public MeetingViewModel()
         {
             Messenger.Default.Register<ToggleSpeakerChangeMessage>(this, OnReceiveToogleSpeakerChangeMessage);
+            Messenger.Default.Register<EditSpeakerMessage>(this, OnReceiveEditSpeakerMessage);
 
             this.Initialize();
         }
-        
+
         private void Initialize(Meeting meeting = null)
         {
             this.StopwatchState = StopwatchState.Zero;
@@ -47,6 +50,7 @@ namespace ChronoTalk.ViewModels
             {
                 this.Meeting.MeetingStatusChanged -= MeetingOnMeetingStatusChanged;
                 this.Meeting.SpeakerAdded -= MeetingOnSpeakerAdded;
+                this.Meeting.SpeakerRemoved -= MeetingOnSpeakerRemoved;
             }
 
             this.Meeting = meeting ?? new Meeting();
@@ -58,6 +62,7 @@ namespace ChronoTalk.ViewModels
 
             this.Meeting.MeetingStatusChanged += MeetingOnMeetingStatusChanged;
             this.Meeting.SpeakerAdded += MeetingOnSpeakerAdded;
+            this.Meeting.SpeakerRemoved += MeetingOnSpeakerRemoved;
 
             this.blinkStopWatchDisplayTimer?.Dispose();
             this.DisplayStopwatch = true;
@@ -261,7 +266,17 @@ namespace ChronoTalk.ViewModels
         private void MeetingOnSpeakerAdded(object sender, Speaker speaker)
         {
             var vm = new SpeakerViewModel(speaker, this.Meeting);
+            vm.Navigation = this.Navigation;
             this.Speakers.Add(vm);
+        }
+
+        private void MeetingOnSpeakerRemoved(object sender, Speaker speaker)
+        {
+            var foundedSpeakerViewModel = this.Speakers.FirstOrDefault(x => x.Speaker == speaker);
+            if (foundedSpeakerViewModel != null)
+            {
+                this.Speakers.Remove(foundedSpeakerViewModel);
+            }
         }
 
         private void MeetingOnMeetingStatusChanged(object sender, MeetingStatus status)
@@ -322,6 +337,12 @@ namespace ChronoTalk.ViewModels
             DisplayStopwatch = !DisplayStopwatch;
         }
 
+        private void OnReceiveEditSpeakerMessage(EditSpeakerMessage message)
+        {
+            var speakerPage = new SpeakerPage { BindingContext = message.SpeakerViewModel };
+            this.Navigation.PushAsync(speakerPage);
+        }
+
         private void OnReceiveToogleSpeakerChangeMessage(ToggleSpeakerChangeMessage message)
         {
             this.CurrentSpeaker = message.SpeakerViewModel;
@@ -335,6 +356,18 @@ namespace ChronoTalk.ViewModels
             this.startStopwatchCommand?.RaiseCanExecuteChanged();
             this.stopStopwatchCommmand?.RaiseCanExecuteChanged();
             this.resetStopwatchCommand?.RaiseCanExecuteChanged();
+        }
+
+        public ICommand EditCommand
+        {
+            get
+            {
+                if (editCommand == null)
+                {
+                    editCommand = new Command(() => { });
+                }
+                return editCommand;
+            }
         }
     }
 }

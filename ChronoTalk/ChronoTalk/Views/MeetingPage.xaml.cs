@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using ChronoTalk.ViewModels;
 using Xamarin.Forms;
 
@@ -29,7 +30,6 @@ namespace ChronoTalk.Views
         {
             var speakerPage = new SpeakerPage();
             speakerPage.BindingContext = speaker;
-
             await this.Navigation.PushAsync(speakerPage);
         }
     }
