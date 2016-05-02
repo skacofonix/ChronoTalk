@@ -224,7 +224,6 @@ namespace ChronoTalk.ViewModels
         private async Task NavigateToSpeaker(SpeakerViewModel speaker)
         {
             var speakerPage = new SpeakerPage {BindingContext = speaker};
-
             await this.Navigation.PushAsync(speakerPage);
         }
 

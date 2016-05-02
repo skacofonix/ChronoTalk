@@ -36,6 +36,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
+    <Compile Include="Behaviors\BehaviorBase.cs" />
+    <Compile Include="Behaviors\EventToCommandBehavior.cs" />
     <Compile Include="Converters\ObjectToBoolConverter.cs" />
     <Compile Include="Converters\ReverseBoolConverter.cs" />
     <Compile Include="Messages\ChronoTalkSettingMessage.cs" />
@@ -62,6 +64,9 @@
     <Compile Include="ViewModels\TalkViewModel.cs" />
     <Compile Include="Views\ChonoTalkSettingsPage.xaml.cs">
       <DependentUpon>ChonoTalkSettingsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\StopwatchView.xaml.cs">
+      <DependentUpon>StopwatchView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MeetingPage.xaml.cs">
       <DependentUpon>MeetingPage.xaml</DependentUpon>
@@ -116,6 +121,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Views\ChonoTalkSettingsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Controls\StopwatchView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>

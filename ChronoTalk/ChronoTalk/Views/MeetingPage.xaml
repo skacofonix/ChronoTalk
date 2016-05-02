@@ -3,6 +3,7 @@
 <TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:ChronoTalk.ViewModels;assembly=ChronoTalk"
+             xmlns:controls="clr-namespace:ChronoTalk.Views.Controls;assembly=ChronoTalk"
              x:Class="ChronoTalk.Views.MeetingPage"
              Title="Chrono talk" >
 
@@ -20,7 +21,11 @@
     <StackLayout Padding="10">
       
         <StackLayout Orientation="Horizontal">
-      
+
+          <controls:StopwatchView IsVisible="True">
+            
+          </controls:StopwatchView>
+          
           <Grid HorizontalOptions="CenterAndExpand" VerticalOptions="Center">
               <Grid.RowDefinitions>
                   <RowDefinition Height="80" />
