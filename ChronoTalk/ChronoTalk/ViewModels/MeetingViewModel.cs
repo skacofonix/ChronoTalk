@@ -37,7 +37,6 @@ namespace ChronoTalk.ViewModels
         public MeetingViewModel()
         {
             Messenger.Default.Register<ToggleSpeakerChangeMessage>(this, OnReceiveToogleSpeakerChangeMessage);
-            Messenger.Default.Register<EditSpeakerMessage>(this, OnReceiveEditSpeakerMessage);
 
             this.Initialize();
         }
@@ -265,7 +264,7 @@ namespace ChronoTalk.ViewModels
 
         private void MeetingOnSpeakerAdded(object sender, Speaker speaker)
         {
-            var vm = new SpeakerViewModel(speaker, this.Meeting);
+            var vm = new SpeakerViewModel(this, speaker);
             vm.Navigation = this.Navigation;
             this.Speakers.Add(vm);
         }
@@ -337,12 +336,6 @@ namespace ChronoTalk.ViewModels
             DisplayStopwatch = !DisplayStopwatch;
         }
 
-        private void OnReceiveEditSpeakerMessage(EditSpeakerMessage message)
-        {
-            var speakerPage = new SpeakerPage { BindingContext = message.SpeakerViewModel };
-            this.Navigation.PushAsync(speakerPage);
-        }
-
         private void OnReceiveToogleSpeakerChangeMessage(ToggleSpeakerChangeMessage message)
         {
             this.CurrentSpeaker = message.SpeakerViewModel;
@@ -364,10 +357,17 @@ namespace ChronoTalk.ViewModels
             {
                 if (editCommand == null)
                 {
-                    editCommand = new Command(() => { });
+                    editCommand = new Command<SpeakerViewModel>(ExecuteEditCommand);
                 }
+
                 return editCommand;
             }
+        }
+
+        private void ExecuteEditCommand(SpeakerViewModel speaker)
+        {
+            var speakerPage = new SpeakerPage { BindingContext = speaker };
+            this.Navigation.PushAsync(speakerPage);
         }
     }
 }

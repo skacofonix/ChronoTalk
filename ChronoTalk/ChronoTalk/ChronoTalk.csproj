@@ -36,6 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
+    <Compile Include="Converters\ObjectToBoolConverter.cs" />
     <Compile Include="Converters\ReverseBoolConverter.cs" />
     <Compile Include="Messages\ChronoTalkSettingMessage.cs" />
     <Compile Include="Messages\RefreshStopwatchRenderMessage.cs" />
@@ -56,6 +57,7 @@
     <Compile Include="ViewModels\ChronoTalkSettingsViewModel.cs" />
     <Compile Include="Messages\EditSpeakerMessage.cs" />
     <Compile Include="ViewModels\MeetingViewModel.cs" />
+    <Compile Include="Messages\SelectSpeakerMessage.cs" />
     <Compile Include="ViewModels\SpeakerViewModel.cs" />
     <Compile Include="ViewModels\TalkViewModel.cs" />
     <Compile Include="Views\ChonoTalkSettingsPage.xaml.cs">

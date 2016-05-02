@@ -20,18 +20,18 @@ namespace ChronoTalk.ViewModels
         private ObservableCollection<TalkViewModel> talks = new ObservableCollection<TalkViewModel>();
         private double speakTimeRatio;
         private Timer timer;
-        private ICommand editCommand;
         private ICommand deleteCommand;
 
-        private SpeakerViewModel()
+        public SpeakerViewModel()
         {
             Messenger.Default.Register<RefreshStopwatchRenderMessage>(this, OnReceiveRefreshStopwatchRenderMessage);
         }
 
-        public SpeakerViewModel(Speaker speaker, Meeting meeting) : this()
+        public SpeakerViewModel(MeetingViewModel meetingViewModel, Speaker speaker) : this()
         {
+            this.MeetingViewModel = meetingViewModel;
+            this.meeting = meetingViewModel.Meeting;
             this.speaker = speaker;
-            this.meeting = meeting;
 
             this.meeting.TalkChanged += MeetingOnTalkChanged;
             this.meeting.MeetingStatusChanged += MeetingOnMeetingStatusChanged;
@@ -40,6 +40,10 @@ namespace ChronoTalk.ViewModels
         }
 
         public Speaker Speaker => this.speaker;
+
+        public Meeting Meeting => this.meeting;
+
+        public MeetingViewModel MeetingViewModel { get; }
 
         public string Name
         {
@@ -134,24 +138,6 @@ namespace ChronoTalk.ViewModels
                 this.OnPropertyChanged("SpeakTime");
                 this.OnPropertyChanged("SpeakTimeMilliseconds");
             }
-        }
-
-        public ICommand EditCommand
-        {
-            get
-            {
-                if (editCommand == null)
-                {
-                    editCommand = new RelayCommand<SpeakerViewModel>(async speakerViewModel => await ExecuteEditCommand(speakerViewModel));
-                }
-
-                return editCommand;
-            }
-        }
-
-        private async Task ExecuteEditCommand(SpeakerViewModel speakerViewModel)
-        {
-            Messenger.Default.Send(new EditSpeakerMessage(speakerViewModel));
         }
 
         public ICommand DeleteCommand

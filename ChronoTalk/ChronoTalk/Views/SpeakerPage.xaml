@@ -2,16 +2,16 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:converters="clr-namespace:ChronoTalk.Converters;assembly=ChronoTalk"
-             xmlns:vm="clr-namespace:ChronoTalk.ViewModels;assembly=ChronoTalk"
+             xmlns:viewModels="clr-namespace:ChronoTalk.ViewModels;assembly=ChronoTalk"
              x:Class="ChronoTalk.Views.SpeakerPage"
              Title="Speaker">
 
   <!--
   <ContentPage.BindingContext>
-    <vm:SpeakerViewModel />
+    <viewModels:SpeakerViewModel />
   </ContentPage.BindingContext>
   -->
-  
+    
   <ContentPage.Resources>
     <ResourceDictionary>
       <converters:ReverseBoolConverter x:Key="ReverseBoolConverter" />
@@ -22,14 +22,58 @@
   
     <StackLayout Padding="10">
 
-      <Image Source="{Binding Image}" />
-      <Entry Text="{Binding Name}" Placeholder="Name" />
-      <Label Text="{Binding SpeakTime, StringFormat='{0:c}'}" />
+      <StackLayout Orientation="Horizontal">
+        <Image Source="{Binding Image}"
+               HorizontalOptions="Start" />
+        <Entry Text="{Binding Name}"
+               Placeholder="Name"
+               FontSize="20"
+               HorizontalOptions="FillAndExpand"
+               VerticalOptions="Center"/>
+      </StackLayout>
 
-      <Button HorizontalOptions="End" Text="Start" Command="{Binding ToggleSpeakerCommand}" BackgroundColor="#4CAF50" IsVisible="{Binding IsSpeaking, Converter={StaticResource ReverseBoolConverter}}" />
-      <Button HorizontalOptions="End" Text="Stop" Command="{Binding ToggleSpeakerCommand}" BackgroundColor="#F44336" IsVisible="{Binding IsSpeaking}" />
+      <StackLayout Orientation="Horizontal">
+        
+        <Grid HorizontalOptions="CenterAndExpand" VerticalOptions="Center">
+          <Grid.RowDefinitions>
+            <RowDefinition Height="80" />
+          </Grid.RowDefinitions>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="70" />
+            <ColumnDefinition Width="70" />
+            <ColumnDefinition Width="40" />
+          </Grid.ColumnDefinitions>
+          <Label Grid.Row="0" Grid.Column="0" FontSize="60" VerticalOptions="End" HorizontalTextAlignment="End" Text="{Binding SpeakTime.Minutes, StringFormat='{0:0}'}" />
+          <Label Grid.Row="0" Grid.Column="1" FontSize="60" VerticalOptions="End" HorizontalTextAlignment="End" Text="{Binding SpeakTime.Seconds, StringFormat='{0:00}'}" />
+          <Label Grid.Row="0" Grid.Column="2" FontSize="30" VerticalOptions="End" HorizontalTextAlignment="Start" Text="{Binding SpeakTimeMilliseconds}" />
+        </Grid>
 
-      <ListView ItemsSource="{Binding Talks}" >
+        <Button Text="Start"
+                TextColor="Black"
+                BackgroundColor="#4CAF50"
+                Command="{Binding ToggleSpeakerCommand}"
+                HorizontalOptions="End">
+          <Button.Triggers>
+            <DataTrigger TargetType="Button"
+                         Binding="{Binding IsSpeaking}"
+                         Value="True">
+              <Setter Property="Text" Value="Stop" />
+              <Setter Property="BackgroundColor" Value="#F44336" />
+              <Setter Property="TextColor" Value="White" />
+            </DataTrigger>
+          </Button.Triggers>
+        </Button>
+        
+      </StackLayout>
+      
+      <ListView ItemsSource="{Binding Talks}"
+                IsVisible="{Binding Talks.Count}"
+                ItemSelected="ListViewOnItemSelected">
+        <ListView.Header>
+          <StackLayout>
+            <Label Text="Talks" FontAttributes="Bold" />
+          </StackLayout>
+        </ListView.Header>
         <ListView.ItemTemplate>
           <DataTemplate>
             <ViewCell>
