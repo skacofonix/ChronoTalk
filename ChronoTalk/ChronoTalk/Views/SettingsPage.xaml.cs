@@ -1,8 +1,8 @@
 ﻿namespace ChronoTalk.Views
 {
-    public partial class ChonoTalkSettingsPage
-    {
-        public ChonoTalkSettingsPage()
+    public partial class SettingsPage
+    { 
+        public SettingsPage()
         {
             InitializeComponent();
         }

@@ -6,7 +6,7 @@ using GalaSoft.MvvmLight.Messaging;
 
 namespace ChronoTalk.ViewModels
 {
-    public class ChronoTalkSettingsViewModel : BaseViewModel
+    public class SettingsViewModel : BaseViewModel
     {
         private readonly StopwatchSettings settings = new StopwatchSettings();
         private RelayCommand resetCommand;
