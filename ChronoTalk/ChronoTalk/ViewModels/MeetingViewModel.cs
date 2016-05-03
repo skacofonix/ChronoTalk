@@ -247,16 +247,8 @@ namespace ChronoTalk.ViewModels
 
         private async Task NavigateToSetting()
         {
-            var settingsPage = new ChonoTalkSettingsPage();
-
-            try
-            {
-                await this.Navigation.PushAsync(settingsPage);
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            var settingsPage = new SettingsPage();
+            await this.Navigation.PushAsync(settingsPage);
         }
 
         #endregion
