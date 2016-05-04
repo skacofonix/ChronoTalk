@@ -13,6 +13,7 @@ namespace ChronoTalk
         {
             // The root page of your application
             MainPage = new NavigationPage(new MeetingPage());
+            GalaSoft.MvvmLight.Ioc.SimpleIoc.Default.Register<INavigation>(() => MainPage.Navigation);
         }
 
         protected override void OnStart()

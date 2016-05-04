@@ -19,12 +19,10 @@
     </ContentPage.ToolbarItems>
 
     <StackLayout Padding="10">
-      
-        <StackLayout Orientation="Horizontal">
 
-          <controls:StopwatchView IsVisible="True">
-            
-          </controls:StopwatchView>
+      <controls:StopwatchView TextControl="Test" />
+      
+      <StackLayout Orientation="Horizontal">
           
           <Grid HorizontalOptions="CenterAndExpand" VerticalOptions="Center">
               <Grid.RowDefinitions>

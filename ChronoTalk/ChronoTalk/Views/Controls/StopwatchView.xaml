@@ -1,11 +1,41 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<View xmlns="http://xamarin.com/schemas/2014/forms"
+<StackLayout xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ChronoTalk.Views.Controls.StopwatchView">
-  <StackLayout BackgroundColor="Black">
-    <Label Text="Hello World!"
-           VerticalOptions="Center"
-           HorizontalOptions="Center"
-           TextColor="White" />
-  </StackLayout>
-</View>
+  
+  <Label Text="Top" />
+  <Label x:Name="Text" Text="{Binding Text}" />
+  
+  <Grid HorizontalOptions="CenterAndExpand" VerticalOptions="Center">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="80" />
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="70" />
+      <ColumnDefinition Width="70" />
+      <ColumnDefinition Width="40" />
+    </Grid.ColumnDefinitions>
+    <Label x:Name="Minutes"
+           Grid.Row="0"
+           Grid.Column="0"
+           FontSize="60"
+           VerticalOptions="End"
+           HorizontalTextAlignment="End" />
+    <Label x:Name="Seconds"
+           Text="{Binding Elapsed.Seconds, StringFormat='{0:00}'}"
+           Grid.Row="0"
+           Grid.Column="1"
+           FontSize="60"
+           VerticalOptions="End"
+           HorizontalTextAlignment="End" />
+    <Label x:Name="Millisecond"
+           Grid.Row="0"
+           Grid.Column="2"
+           FontSize="30"
+           VerticalOptions="End"
+           HorizontalTextAlignment="Start" />
+  </Grid>
+  
+  <Label Text="Bottom" />
+  
+</StackLayout>

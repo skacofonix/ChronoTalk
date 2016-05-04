@@ -207,28 +207,6 @@ namespace ChronoTalk.ViewModels
 
         #endregion
 
-        #region ShowSpeaker Command
-
-        public ICommand ShowSpeakerCommand
-        {
-            get
-            {
-                if (this.showSpeakerCommand == null)
-                {
-                    this.showSpeakerCommand = new RelayCommand<SpeakerViewModel>(async (s) => await NavigateToSpeaker(s), (s) => true);
-                }
-                return showSpeakerCommand;
-            }
-        }
-
-        private async Task NavigateToSpeaker(SpeakerViewModel speaker)
-        {
-            var speakerPage = new SpeakerPage {BindingContext = speaker};
-            await this.Navigation.PushAsync(speakerPage);
-        }
-
-        #endregion
-
         #region ShowSettings Command
 
         public ICommand ShowSettingsCommand
@@ -242,8 +220,6 @@ namespace ChronoTalk.ViewModels
                 return showSettingsCommand;
             }
         }
-
-        
 
         private async Task NavigateToSetting()
         {
@@ -358,7 +334,10 @@ namespace ChronoTalk.ViewModels
         private void ExecuteEditCommand(SpeakerViewModel speaker)
         {
             var speakerPage = new SpeakerPage { BindingContext = speaker };
-            this.Navigation.PushAsync(speakerPage);
+
+            var navigation = GalaSoft.MvvmLight.Ioc.SimpleIoc.Default.GetInstance<INavigation>();
+
+            navigation.PushAsync(speakerPage);
         }
     }
 }
