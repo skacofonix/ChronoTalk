@@ -3,8 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ChronoTalk.Views.Controls.StopwatchView">
   
-  <Label Text="Top" />
-  <Label x:Name="Text" Text="{Binding Text}" />
+  <Label x:Name="ElapsedText" Text="{Binding Elapsed, StringFormat='Elased:{0:c}'}" />
   
   <Grid HorizontalOptions="CenterAndExpand" VerticalOptions="Center">
     <Grid.RowDefinitions>
@@ -16,6 +15,7 @@
       <ColumnDefinition Width="40" />
     </Grid.ColumnDefinitions>
     <Label x:Name="Minutes"
+           Text="{Binding Elapsed.Minutes, StringFormat='{0:00}'}"
            Grid.Row="0"
            Grid.Column="0"
            FontSize="60"
@@ -29,13 +29,12 @@
            VerticalOptions="End"
            HorizontalTextAlignment="End" />
     <Label x:Name="Millisecond"
+           Text="{Binding Elapsed.Milliseconds, StringFormat='{0:00}'}"
            Grid.Row="0"
            Grid.Column="2"
            FontSize="30"
            VerticalOptions="End"
            HorizontalTextAlignment="Start" />
   </Grid>
-  
-  <Label Text="Bottom" />
   
 </StackLayout>

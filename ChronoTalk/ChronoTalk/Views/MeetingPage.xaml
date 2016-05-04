@@ -20,7 +20,7 @@
 
     <StackLayout Padding="10">
 
-      <controls:StopwatchView TextControl="Test" />
+      <!--<controls:StopwatchView TextControl="{Binding StringTest}" Elapsed="{Binding ElapsedTime}" BindingContext="{Binding .}" />-->
       
       <StackLayout Orientation="Horizontal">
           
