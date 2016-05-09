@@ -5,7 +5,6 @@ using System.Windows.Input;
 using ChronoTalk.Messages;
 using ChronoTalk.Models;
 using ChronoTalk.Tools;
-using ChronoTalk.Views;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using Xamarin.Forms;

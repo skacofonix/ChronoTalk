@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ChronoTalk.Views;
+﻿using ChronoTalk.Views;
 using Xamarin.Forms;
 
 namespace ChronoTalk
