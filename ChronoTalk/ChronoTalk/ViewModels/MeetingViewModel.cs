@@ -41,7 +41,7 @@ namespace ChronoTalk.ViewModels
             set
             {
                 stringTest = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -69,8 +69,9 @@ namespace ChronoTalk.ViewModels
             this.Speakers.Clear();
 
             this.RaiseAllCanExecute();
-            this.OnPropertyChanged("ElapsedTime");
-            this.OnPropertyChanged("ElapsedMilliseconds");
+
+            this.RaisePropertyChanged(() => this.ElapsedTime);
+            this.RaisePropertyChanged(() => this.ElapsedMilliseconds);
 
             this.Meeting.MeetingStatusChanged += MeetingOnMeetingStatusChanged;
             this.Meeting.SpeakerAdded += MeetingOnSpeakerAdded;
@@ -91,7 +92,7 @@ namespace ChronoTalk.ViewModels
 
                 this.selectedSpeaker?.ToggleSpeakerCommand.Execute(this.selectedSpeaker);
 
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -101,7 +102,7 @@ namespace ChronoTalk.ViewModels
             set
             {
                 speakers = value;
-                this.OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -111,11 +112,13 @@ namespace ChronoTalk.ViewModels
             set
             {
                 currentSpeaker = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
         public TimeSpan ElapsedTime => this.Meeting.Duration;
+
+        public TimeSpan TotalSpeakDuration => this.Meeting.TotalSpeakTime();
 
         public string ElapsedMilliseconds => this.Meeting.Duration.Milliseconds.ToString("000").Substring(0, 2);
 
@@ -127,7 +130,7 @@ namespace ChronoTalk.ViewModels
             set
             {
                 displayStopwatch = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -137,8 +140,8 @@ namespace ChronoTalk.ViewModels
             set
             {
                 stopwatchState = value;
-                OnPropertyChanged();
-                OnPropertyChanged("IsRunning");
+                RaisePropertyChanged();
+                RaisePropertyChanged(() => this.IsRunning);
             }
         }
 
@@ -302,12 +305,8 @@ namespace ChronoTalk.ViewModels
 
         private void RefreshStopwatchRender()
         {
-            this.OnPropertyChanged("ElapsedTime");
-            this.OnPropertyChanged("ElapsedDays");
-            this.OnPropertyChanged("ElapsedHours");
-            this.OnPropertyChanged("ElapsedMinutes");
-            this.OnPropertyChanged("ElapsedSeconds");
-            this.OnPropertyChanged("ElapsedMilliseconds");
+            RaisePropertyChanged(() => ElapsedTime);
+            RaisePropertyChanged(() => ElapsedMilliseconds);
             Messenger.Default.Send(new RefreshStopwatchRenderMessage());
         }
 
@@ -343,6 +342,7 @@ namespace ChronoTalk.ViewModels
                 return editCommand;
             }
         }
+
 
         private void ExecuteEditCommand(SpeakerViewModel speaker)
         {

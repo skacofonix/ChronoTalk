@@ -62,6 +62,9 @@
     <Compile Include="Messages\SelectSpeakerMessage.cs" />
     <Compile Include="ViewModels\SpeakerViewModel.cs" />
     <Compile Include="ViewModels\TalkViewModel.cs" />
+    <Compile Include="Views\MeetingStatisticsView.xaml.cs">
+      <DependentUpon>MeetingStatisticsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
@@ -126,6 +129,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Controls\StopwatchView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\MeetingStatisticsView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

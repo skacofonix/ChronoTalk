@@ -17,7 +17,7 @@ namespace ChronoTalk.ViewModels
             set
             {
                 settings.StopwatchRefreshDelayMillisecond = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
                 NotifySettingChanged();
             }
         }
@@ -28,7 +28,7 @@ namespace ChronoTalk.ViewModels
             set
             {
                 settings.AllowStopwatchMeetingWithoutTalk = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
                 NotifySettingChanged();
             }
         }
@@ -39,7 +39,7 @@ namespace ChronoTalk.ViewModels
             set
             {
                 settings.ReStartLastTalkAfterReStartMeetingStopwatch = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
                 NotifySettingChanged();
             }
         }

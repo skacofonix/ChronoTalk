@@ -23,8 +23,10 @@ namespace ChronoTalk.ViewModels
 
         private void OnReceiveRefreshStopwatchRenderMessage(RefreshStopwatchRenderMessage message)
         {
-            if(this.talk.State == SpeakerStatus.Speaking)
-                OnPropertyChanged("Duration");
+            if (this.talk.State == SpeakerStatus.Speaking)
+            {
+                RaisePropertyChanged(() => this.Duration);
+            }
         }
     }
 }

@@ -51,7 +51,7 @@ namespace ChronoTalk.ViewModels
             set
             {
                 this.speaker.Name = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -61,7 +61,7 @@ namespace ChronoTalk.ViewModels
             set
             {
                 this.speaker.Image = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -71,7 +71,7 @@ namespace ChronoTalk.ViewModels
             set
             {
                 this.talks = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -88,7 +88,7 @@ namespace ChronoTalk.ViewModels
             set
             {
                 speakTimeRatio = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -115,7 +115,7 @@ namespace ChronoTalk.ViewModels
 
         private void MeetingOnTalkChanged(object sender, Talk talk)
         {
-            OnPropertyChanged("IsSpeaking");
+            RaisePropertyChanged(() => this.IsSpeaking);
 
             if (talk?.Speaker == speaker)
             {
@@ -126,17 +126,17 @@ namespace ChronoTalk.ViewModels
 
         private void MeetingOnMeetingStatusChanged(object sender, MeetingStatus meetingStatus)
         {
-            OnPropertyChanged("IsSpeaking");
+            RaisePropertyChanged(() => this.IsSpeaking);
         }
 
         private void OnReceiveRefreshStopwatchRenderMessage(RefreshStopwatchRenderMessage message)
         {
-            OnPropertyChanged("IsSpeaking");
+            RaisePropertyChanged(() => this.IsSpeaking);
 
             if (this.IsSpeaking)
             {
-                this.OnPropertyChanged("SpeakTime");
-                this.OnPropertyChanged("SpeakTimeMilliseconds");
+                RaisePropertyChanged(() => SpeakTime);
+                RaisePropertyChanged(() => SpeakTimeMilliseconds);
             }
         }
 
