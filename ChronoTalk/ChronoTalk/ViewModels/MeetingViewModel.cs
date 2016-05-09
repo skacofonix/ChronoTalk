@@ -33,25 +33,12 @@ namespace ChronoTalk.ViewModels
         private Timer refreshStopwatchRenderTimer;
         private SpeakerViewModel selectedSpeaker;
         private ICommand editCommand;
-        private string stringTest;
-
-        public string StringTest
-        {
-            get { return stringTest; }
-            set
-            {
-                stringTest = value;
-                RaisePropertyChanged();
-            }
-        }
 
         public MeetingViewModel()
         {
             Messenger.Default.Register<ToggleSpeakerChangeMessage>(this, OnReceiveToogleSpeakerChangeMessage);
 
             this.Initialize();
-
-            this.StringTest = "Blablablablabla";
         }
 
         private void Initialize(Meeting meeting = null)
