@@ -2,9 +2,9 @@
 
 namespace ChronoTalk.Views
 {
-    public partial class SpeakerPage
+    public partial class SpeakerView
     {
-        public SpeakerPage()
+        public SpeakerView()
         {
             this.InitializeComponent();
         }

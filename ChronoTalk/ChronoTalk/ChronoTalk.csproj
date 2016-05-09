@@ -62,17 +62,17 @@
     <Compile Include="Messages\SelectSpeakerMessage.cs" />
     <Compile Include="ViewModels\SpeakerViewModel.cs" />
     <Compile Include="ViewModels\TalkViewModel.cs" />
-    <Compile Include="Views\SettingsPage.xaml.cs">
-      <DependentUpon>SettingsPage.xaml</DependentUpon>
+    <Compile Include="Views\SettingsView.xaml.cs">
+      <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Controls\StopwatchView.xaml.cs">
       <DependentUpon>StopwatchView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\MeetingPage.xaml.cs">
-      <DependentUpon>MeetingPage.xaml</DependentUpon>
+    <Compile Include="Views\MeetingView.xaml.cs">
+      <DependentUpon>MeetingView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SpeakerPage.xaml.cs">
-      <DependentUpon>SpeakerPage.xaml</DependentUpon>
+    <Compile Include="Views\SpeakerView.xaml.cs">
+      <DependentUpon>SpeakerView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -109,17 +109,17 @@
     <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\MeetingPage.xaml">
+    <EmbeddedResource Include="Views\MeetingView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\SpeakerPage.xaml">
+    <EmbeddedResource Include="Views\SpeakerView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\SettingsPage.xaml">
+    <EmbeddedResource Include="Views\SettingsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

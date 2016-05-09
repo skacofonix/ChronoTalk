@@ -236,7 +236,7 @@ namespace ChronoTalk.ViewModels
 
         private async Task NavigateToSetting()
         {
-            var settingsPage = new SettingsPage();
+            var settingsPage = new SettingsView();
             await this.Navigation.PushAsync(settingsPage);
         }
 
@@ -346,7 +346,7 @@ namespace ChronoTalk.ViewModels
 
         private void ExecuteEditCommand(SpeakerViewModel speaker)
         {
-            var speakerPage = new SpeakerPage { BindingContext = speaker };
+            var speakerPage = new SpeakerView { BindingContext = speaker };
 
             var navigation = GalaSoft.MvvmLight.Ioc.SimpleIoc.Default.GetInstance<INavigation>();
 

@@ -3,12 +3,12 @@ using Xamarin.Forms;
 
 namespace ChronoTalk.Views
 {
-    public partial class MeetingPage
+    public partial class MeetingView
     {
         private INavigation navigation;
         private MeetingViewModel vm;
 
-        public MeetingPage()
+        public MeetingView()
         {
             this.InitializeComponent();
             navigation = this.Navigation;
