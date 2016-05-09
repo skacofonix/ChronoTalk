@@ -350,7 +350,7 @@ namespace ChronoTalk.ViewModels
 
             var navigation = GalaSoft.MvvmLight.Ioc.SimpleIoc.Default.GetInstance<INavigation>();
 
-            navigation.PushAsync(speakerPage);
+            navigation.PushAsync(speakerPage, true);
         }
     }
 }
